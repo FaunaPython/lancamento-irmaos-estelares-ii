@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estratégia de Lançamento · Irmãos Estelares Part II</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#07060f;--surface:#0f0e1c;--card:#14132a;--border:rgba(168,85,247,0.18);
+  --purple:#8B3FD9;--purple-b:#A855F7;--gold:#D4A535;--gold-l:#F0C060;
+  --accent:#5B8DF5;--teal:#2DD4BF;--coral:#F97316;--rose:#EC4899;
+  --text:#c8d0e8;--text-d:#7a85a0;--white:#f0efff;
+  --green:#22c55e;--amber:#f59e0b;--red:#ef4444;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden;}
+
+/* HEADER */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.logo{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;}
+.logo span{color:var(--purple-b);}
+.date-badge{font-size:.75rem;background:rgba(88,63,217,.2);border:1px solid rgba(139,63,217,.3);color:var(--purple-b);padding:.3rem .8rem;border-radius:20px;letter-spacing:.08em;}
+
+/* NAV */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;gap:.5rem;overflow-x:auto;}
+.nav a{font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-d);padding:.4rem .9rem;border-radius:20px;text-decoration:none;white-space:nowrap;transition:all .2s;}
+.nav a:hover,.nav a.active{background:rgba(139,63,217,.2);color:var(--purple-b);}
+
+/* HERO */
+.hero{padding:4rem 2rem 3rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(139,63,217,.12) 0%,transparent 70%);pointer-events:none;}
+.hero-tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:rgba(212,165,53,.1);border:1px solid rgba(212,165,53,.25);padding:.35rem 1rem;border-radius:20px;display:inline-block;margin-bottom:1rem;}
+.hero h1{font-family:'Cinzel',serif;font-size:2.4rem;color:var(--white);line-height:1.2;margin-bottom:.5rem;}
+.hero h1 span{color:var(--purple-b);}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--text-d);font-style:italic;margin-bottom:2rem;}
+.kpi-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;text-align:center;min-width:140px;}
+.kpi-n{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--gold);font-weight:700;}
+.kpi-l{font-size:.72rem;color:var(--text-d);letter-spacing:.05em;text-transform:uppercase;margin-top:.2rem;}
+
+/* SECTION */
+.section{padding:3rem 2rem;border-bottom:1px solid var(--border);max-width:960px;margin:0 auto;}
+.section-tag{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--purple-b);font-weight:600;margin-bottom:.5rem;}
+.section-title{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--white);margin-bottom:.5rem;}
+.section-sub{color:var(--text-d);font-size:.9rem;margin-bottom:2rem;}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:2rem;}
+.timeline::before{content:'';position:absolute;left:.5rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--purple),var(--gold),var(--purple));opacity:.3;}
+.t-item{position:relative;margin-bottom:1.5rem;}
+.t-dot{position:absolute;left:-1.75rem;top:.35rem;width:12px;height:12px;border-radius:50%;border:2px solid var(--purple-b);background:var(--void);}
+.t-dot.gold{border-color:var(--gold);}
+.t-dot.live{border-color:var(--teal);background:rgba(45,212,191,.15);}
+.t-date{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-d);margin-bottom:.2rem;}
+.t-title{font-weight:600;color:var(--white);font-size:.95rem;}
+.t-desc{font-size:.85rem;color:var(--text-d);margin-top:.3rem;}
+.t-pills{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem;}
+.pill{font-size:.68rem;font-weight:600;padding:.25rem .65rem;border-radius:10px;letter-spacing:.04em;}
+.pill-p{background:rgba(139,63,217,.15);color:var(--purple-b);border:1px solid rgba(139,63,217,.25);}
+.pill-g{background:rgba(212,165,53,.1);color:var(--gold);border:1px solid rgba(212,165,53,.2);}
+.pill-t{background:rgba(45,212,191,.1);color:var(--teal);border:1px solid rgba(45,212,191,.2);}
+.pill-c{background:rgba(249,115,22,.1);color:var(--coral);border:1px solid rgba(249,115,22,.2);}
+.pill-r{background:rgba(236,72,153,.1);color:var(--rose);border:1px solid rgba(236,72,153,.2);}
+.pill-b{background:rgba(91,141,245,.1);color:var(--accent);border:1px solid rgba(91,141,245,.2);}
+
+/* CARDS GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;}
+.card-icon{font-size:1.4rem;margin-bottom:.75rem;}
+.card h3{font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:.4rem;letter-spacing:.02em;}
+.card p{font-size:.82rem;color:var(--text-d);line-height:1.6;}
+.card ul{font-size:.82rem;color:var(--text-d);line-height:1.6;padding-left:1rem;}
+.card ul li{margin-bottom:.3rem;}
+.card-highlight{border-color:rgba(139,63,217,.35);background:rgba(139,63,217,.06);}
+.card-gold{border-color:rgba(212,165,53,.3);background:rgba(212,165,53,.04);}
+.card-teal{border-color:rgba(45,212,191,.25);background:rgba(45,212,191,.04);}
+
+/* CHANNEL BLOCKS */
+.channel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1rem;}
+.ch-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;}
+.ch-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.ch-icon.ig{background:linear-gradient(135deg,rgba(225,48,108,.2),rgba(193,53,132,.2));}
+.ch-icon.tk{background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);}
+.ch-icon.yt{background:rgba(255,0,0,.1);}
+.ch-icon.wa{background:rgba(37,211,102,.1);}
+.ch-icon.fb{background:rgba(24,119,242,.1);}
+.ch-icon.ad{background:rgba(212,165,53,.1);}
+.ch-name{font-weight:700;color:var(--white);font-size:.95rem;}
+.ch-freq{font-size:.75rem;color:var(--text-d);}
+.content-list{list-style:none;}
+.content-list li{display:flex;gap:.6rem;align-items:flex-start;padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.content-list li:last-child{border-bottom:none;}
+.content-list .day{font-size:.68rem;font-weight:700;letter-spacing:.08em;color:var(--purple-b);min-width:70px;padding-top:.1rem;}
+.content-list .desc{font-size:.82rem;color:var(--text-d);}
+.content-list .format{font-size:.68rem;font-weight:600;background:rgba(255,255,255,.06);padding:.15rem .5rem;border-radius:6px;color:var(--text-d);margin-left:.3rem;white-space:nowrap;}
+
+/* GATILHOS */
+.gatilho{display:flex;gap:1rem;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem;}
+.g-num{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold);font-weight:700;min-width:30px;}
+.g-title{font-weight:600;color:var(--white);font-size:.9rem;margin-bottom:.2rem;}
+.g-desc{font-size:.82rem;color:var(--text-d);}
+.g-example{font-size:.8rem;color:var(--purple-b);margin-top:.4rem;font-style:italic;padding-left:.6rem;border-left:2px solid rgba(139,63,217,.35);}
+
+/* SCRIPTS */
+.script-box{background:rgba(0,0,0,.3);border:1px solid rgba(139,63,217,.2);border-radius:10px;padding:1.25rem;margin-bottom:1rem;}
+.script-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--purple-b);font-weight:600;margin-bottom:.6rem;}
+.script-text{font-size:.85rem;color:var(--text);line-height:1.7;white-space:pre-line;}
+.script-text strong{color:var(--gold);}
+
+/* PLAYER CARDS */
+.player{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;}
+.player-head{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;}
+.player-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:var(--void);flex-shrink:0;}
+.player-name{font-weight:700;color:var(--white);font-size:.9rem;}
+.player-tag{font-size:.72rem;color:var(--text-d);}
+.player-techs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem;}
+.tech{font-size:.7rem;padding:.2rem .6rem;border-radius:8px;font-weight:600;}
+
+/* METRICS */
+.metric-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin-bottom:1.5rem;}
+.metric{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center;}
+.metric-val{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold);font-weight:700;}
+.metric-label{font-size:.72rem;color:var(--text-d);text-transform:uppercase;letter-spacing:.06em;margin-top:.2rem;}
+.metric-target{font-size:.78rem;color:var(--purple-b);margin-top:.15rem;}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.75rem;}
+th{background:rgba(139,63,217,.12);color:var(--purple-b);text-align:left;padding:.6rem .9rem;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;}
+td{padding:.6rem .9rem;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-d);}
+td:first-child{color:var(--white);font-weight:500;}
+tr:hover td{background:rgba(255,255,255,.02);}
+
+/* CHECKLIST */
+.checklist{list-style:none;}
+.checklist li{display:flex;gap:.6rem;align-items:flex-start;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.checklist li:last-child{border-bottom:none;}
+.checklist .ck{width:18px;height:18px;border-radius:4px;border:1px solid rgba(139,63,217,.35);flex-shrink:0;margin-top:.15rem;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--purple-b);}
+.checklist .ck.done{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.35);color:var(--green);}
+.checklist .txt{font-size:.83rem;color:var(--text-d);}
+
+/* NOTICE BOXES */
+.notice{border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;display:flex;gap:.75rem;align-items:flex-start;}
+.notice.purple{background:rgba(139,63,217,.08);border:1px solid rgba(139,63,217,.25);}
+.notice.gold{background:rgba(212,165,53,.08);border:1px solid rgba(212,165,53,.25);}
+.notice.teal{background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.25);}
+.notice .ni{font-size:1rem;flex-shrink:0;}
+.notice .nc{font-size:.83rem;color:var(--text);line-height:1.6;}
+.notice strong{color:var(--gold);}
+
+/* PHASE BADGES */
+.phase{background:rgba(139,63,217,.12);border:1px solid rgba(139,63,217,.25);border-radius:8px;padding:.5rem 1rem;font-size:.75rem;font-weight:700;color:var(--purple-b);letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin-bottom:.75rem;}
+.phase.aquec{background:rgba(91,141,245,.1);border-color:rgba(91,141,245,.25);color:var(--accent);}
+.phase.launch{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:var(--green);}
+.phase.close{background:rgba(212,165,53,.1);border-color:rgba(212,165,53,.25);color:var(--gold);}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .hero h1{font-size:1.7rem;}
+  .kpi-row{justify-content:flex-start;}
+}
+
+/* FOOTER */
+.footer{text-align:center;padding:2rem;font-size:.78rem;color:var(--text-d);border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">Hiperconsciência · <span>Estratégia de Lançamento</span></div>
+  <div class="date-badge">⭐ PART II · 2025</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#timeline" class="active">Cronograma</a>
+  <a href="#canais">Canais</a>
+  <a href="#instagram">Instagram</a>
+  <a href="#tiktok">TikTok/YouTube</a>
+  <a href="#whatsapp">WhatsApp</a>
+  <a href="#trafego">Tráfego Pago</a>
+  <a href="#gatilhos">Gatilhos</a>
+  <a href="#players">Técnicas dos Players</a>
+  <a href="#metricas">Métricas</a>
+  <a href="#checklist">Checklist</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ Documento de Guerra · Lançamento Digital</div>
+  <h1>Irmãos Estelares <span>Part II</span></h1>
+  <p class="hero-sub">Hiperconsciência · Walter_alquimia & Moana Grandinetti</p>
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-n">R$222</div><div class="kpi-l">Ticket do Produto</div></div>
+    <div class="kpi"><div class="kpi-n">26/05</div><div class="kpi-l">Abertura Inscrições</div></div>
+    <div class="kpi"><div class="kpi-n">10/06</div><div class="kpi-l">Live de Consolidação</div></div>
+    <div class="kpi"><div class="kpi-n">14</div><div class="kpi-l">Linhagens Reveladas</div></div>
+    <div class="kpi"><div class="kpi-n">6 ch</div><div class="kpi-l">Canais Ativos</div></div>
+  </div>
+</div>
+
+<!-- POSICIONAMENTO -->
+<div class="section">
+  <div class="section-tag">◎ Diagnóstico da Landing Page</div>
+  <div class="section-title">Posicionamento do Produto</div>
+  <p class="section-sub">Análise extraída diretamente da landing page · irmaos_estelares_final.html</p>
+
+  <div class="grid-2">
+    <div class="card card-highlight">
+      <div class="card-icon">🎯</div>
+      <h3>Proposta de Valor Central</h3>
+      <p>Identificar a linhagem estelar primária do cliente — usando linguagem simbólica, psicológica e espiritual integrada. O produto vai além do conhecimento: promove <strong style="color:var(--gold)">reconhecimento de alma</strong>.</p>
+    </div>
+    <div class="card card-highlight">
+      <div class="card-icon">👥</div>
+      <h3>Público-Alvo Exato</h3>
+      <ul>
+        <li>Quem sempre se sentiu "diferente" ou fora do mundo</li>
+        <li>Pessoas altamente sensíveis (PAS)</li>
+        <li>Terapeutas, coaches, facilitadores</li>
+        <li>Espiritualistas e pesquisadores da consciência</li>
+        <li>Buscadores de propósito e missão de vida</li>
+      </ul>
+    </div>
+    <div class="card card-gold">
+      <div class="card-icon">💰</div>
+      <h3>Ticket: R$222,20</h3>
+      <p>Número com carga simbólica (222 = alinhamento, equilíbrio). Use isso como gatilho: <em style="color:var(--gold)">"O preço não é por acaso"</em>. Acesso vitalício + apostila + ebook reforçam o valor percebido.</p>
+    </div>
+    <div class="card card-gold">
+      <div class="card-icon">✦</div>
+      <h3>Diferenciais Part II</h3>
+      <ul>
+        <li>7 linhagens originais + 7 novas = 14 origens</li>
+        <li>Linhagens inéditas: Greys, Blue Avians, Lemurianos, Intraterrenos...</li>
+        <li>Dois criadores = autoridade dupla</li>
+        <li>Acesso vitalício (sem pressão de prazo interno)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="notice purple" style="margin-top:1.5rem;">
+    <div class="ni">⚡</div>
+    <div class="nc"><strong>Insight estratégico:</strong> O produto vende <em>identidade</em>, não apenas conteúdo. Quem compra não quer "aprender sobre linhagens" — quer confirmar quem é. Toda comunicação deve partir deste ângulo: <em>"Você já sabe no fundo quem você é. O curso vai confirmar."</em></div>
+  </div>
+</div>
+
+<!-- CRONOGRAMA -->
+<div class="section" id="timeline">
+  <div class="section-tag">📅 Cronograma Estratégico</div>
+  <div class="section-title">Do Aquecimento ao Fechamento</div>
+  <p class="section-sub">Plano de ação dia a dia · 20 de Maio → 10 de Junho de 2025</p>
+
+  <!-- FASE 1 -->
+  <div class="phase aquec">FASE 1 · Aquecimento (20/05 → 25/05)</div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-date">20–21/05 · TER-QUA</div>
+      <div class="t-title">Ativação da Base — "Algo vem aí"</div>
+      <div class="t-desc">Stories com contagem regressiva. Post de mistério sem revelar o produto. Reativar contatos no WhatsApp com mensagem de antecipação. Criar lista VIP no WhatsApp.</div>
+      <div class="t-pills">
+        <span class="pill pill-p">Instagram Stories</span>
+        <span class="pill pill-t">WhatsApp</span>
+        <span class="pill pill-c">TikTok teaser</span>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-date">22–23/05 · QUI-SEX</div>
+      <div class="t-title">Revelação do Tema — "As 14 Linhagens chegam"</div>
+      <div class="t-desc">Anunciar oficialmente o curso Part II. Reel explicando as novas linhagens (Greys, Blue Avians, Lemurianos). Lives de aquecimento no IG. Quiz de linhagem nos stories.</div>
+      <div class="t-pills">
+        <span class="pill pill-p">Reel IG</span>
+        <span class="pill pill-c">TikTok trending</span>
+        <span class="pill pill-b">YouTube Shorts</span>
+        <span class="pill pill-t">Lista VIP WhatsApp</span>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-date">24/05 · SÁB</div>
+      <div class="t-title">Live de Aquecimento — "Você é estelar?"</div>
+      <div class="t-desc">Live de 60–90 min revelando 3–4 linhagens gratuitamente. Gerar desejo. Finalizar com o anúncio: "Inscrições abrem segunda-feira". Capturar lista no WhatsApp.</div>
+      <div class="t-pills">
+        <span class="pill pill-p">Live IG</span>
+        <span class="pill pill-c">TikTok Live</span>
+        <span class="pill pill-t">WhatsApp convite</span>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-date">25/05 · DOM</div>
+      <div class="t-title">Dia de Aquecimento Final — Depoimentos e prova social</div>
+      <div class="t-desc">Publicar depoimentos do Part I. Stories com perguntas: "Qual linhagem você acha que é?". Enviar mensagem no WhatsApp: "Amanhã abre. Você está na lista VIP?"</div>
+      <div class="t-pills">
+        <span class="pill pill-p">Stories IG</span>
+        <span class="pill pill-g">Depoimentos</span>
+        <span class="pill pill-t">WhatsApp urgência</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FASE 2 -->
+  <div class="phase launch">FASE 2 · Abertura (26/05 → 02/06)</div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-dot gold"></div>
+      <div class="t-date">26/05 · SEG — DIA D 🚀</div>
+      <div class="t-title">ABERTURA OFICIAL DAS INSCRIÇÕES</div>
+      <div class="t-desc">Post de lançamento no horário nobre (12h ou 20h). Stories com link direto para Hotmart. Mensagem para lista VIP às 9h. Ativar anúncios pagos. Atendimento WhatsApp em tempo real. Meta: primeiras 20 vendas no dia.</div>
+      <div class="t-pills">
+        <span class="pill pill-g">Post Principal IG</span>
+        <span class="pill pill-c">TikTok Lançamento</span>
+        <span class="pill pill-t">WhatsApp Broadcast</span>
+        <span class="pill pill-b">Tráfego Pago ON</span>
+        <span class="pill pill-r">Meta Ads</span>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot gold"></div>
+      <div class="t-date">27–28/05 · TER-QUA</div>
+      <div class="t-title">Reforço + Quebra de Objeções</div>
+      <div class="t-desc">Reel respondendo as 5 principais dúvidas. Post de escassez simbólica. Fazer stories com vendas ao vivo ("mais X pessoas entraram"). WhatsApp: follow-up nos que viram mas não compraram.</div>
+      <div class="t-pills">
+        <span class="pill pill-p">Reel Objeções</span>
+        <span class="pill pill-g">Social Proof</span>
+        <span class="pill pill-t">WhatsApp Follow-up</span>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot gold"></div>
+      <div class="t-date">29/05 · QUI</div>
+      <div class="t-title">Live de Vendas #1 — "Descubra sua Linhagem ao vivo"</div>
+      <div class="t-desc">Live de 90 min com conteúdo + CTA de venda. Usar técnica da virada: entrar falando de transformação, sair pedindo a venda. Mostrar a apostila e o ebook ao vivo.</div>
+      <div class="t-pills">
+        <span class="pill pill-p">Live IG</span>
+        <span class="pill pill-c">TikTok Live</span>
+        <span class="pill pill-t">WhatsApp suporte</span>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot gold"></div>
+      <div class="t-date">30–31/05 · SEX-SÁB</div>
+      <div class="t-title">Conteúdo de Autoridade + Depoimentos</div>
+      <div class="t-desc">Publicar resultados e feedbacks dos primeiros alunos. Reel do tipo "Como saber se você é Pleiadiano/Arcturiano". TikTok com conteúdo educativo de alto alcance. Ativar depoimentos em vídeo.</div>
+      <div class="t-pills">
+        <span class="pill pill-p">Reels Educativos</span>
+        <span class="pill pill-c">TikTok Trending</span>
+        <span class="pill pill-g">Depoimentos Vídeo</span>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot gold"></div>
+      <div class="t-date">01–02/06 · DOM-SEG</div>
+      <div class="t-title">Reativação Pós-Fds + Mídia Paga Escalonada</div>
+      <div class="t-desc">Aumentar budget dos anúncios que estão performando. Remarketing para quem visitou a LP e não comprou. WhatsApp: "você ainda está pensando?"</div>
+      <div class="t-pills">
+        <span class="pill pill-b">Scale Anúncios</span>
+        <span class="pill pill-r">Remarketing</span>
+        <span class="pill pill-t">WhatsApp Retargeting</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FASE 3 -->
+  <div class="phase close">FASE 3 · Consolidação e Fechamento (03/06 → 10/06)</div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-dot live"></div>
+      <div class="t-date">03–06/06 · TER-SEX</div>
+      <div class="t-title">Semana de Consolidação</div>
+      <div class="t-desc">Conteúdo de aprofundamento das linhagens novas (7 novidades). Um reel/tiktok por linhagem revelada. Depoimentos contínuos. WhatsApp: mensagem personalizada por perfil de linhagem.</div>
+      <div class="t-pills">
+        <span class="pill pill-c">Série TikTok Linhagens</span>
+        <span class="pill pill-p">Reels Diários IG</span>
+        <span class="pill pill-t">WhatsApp Segmentado</span>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot live"></div>
+      <div class="t-date">07–09/06 · SÁB-SEG</div>
+      <div class="t-title">Urgência Final — "Últimas Vagas / Período"</div>
+      <div class="t-desc">Comunicação de fechamento iminente. Escassez real ou simbólica. Aumentar frequência de stories. Anúncios de remarketing agressivos. WhatsApp: "Fecha em X dias. Não perca."</div>
+      <div class="t-pills">
+        <span class="pill pill-g">Urgência Stories</span>
+        <span class="pill pill-b">Anúncios Agressivos</span>
+        <span class="pill pill-t">WhatsApp Final</span>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot live"></div>
+      <div class="t-date">10/06 · TER — GRANDE LIVE 🔴</div>
+      <div class="t-title">LIVE DE CONSOLIDAÇÃO FINAL</div>
+      <div class="t-desc">Live de 2h+ com Walter_alquimia + Moana juntos. Estrutura: 60min conteúdo → 20min depoimentos → 20min quebra de objeções → 20min pitching e CTA. Abrir sala de perguntas. Fechar com urgência real.</div>
+      <div class="t-pills">
+        <span class="pill pill-g">Live Conjunta IG+TK</span>
+        <span class="pill pill-p">CTA Forte</span>
+        <span class="pill pill-t">WhatsApp Suporte ao Vivo</span>
+        <span class="pill pill-b">Retargeting Max</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CANAIS -->
+<div class="section" id="canais">
+  <div class="section-tag">📡 Estratégia por Canal</div>
+  <div class="section-title">Cada Canal tem uma Função</div>
+  <p class="section-sub">Não trate todos os canais igual. Cada um serve um papel específico no funil.</p>
+
+  <table>
+    <tr>
+      <th>Canal</th>
+      <th>Função Principal</th>
+      <th>Tom</th>
+      <th>Frequência</th>
+      <th>CTA</th>
+    </tr>
+    <tr>
+      <td>Instagram Feed</td>
+      <td>Autoridade + Prova social</td>
+      <td>Místico, profundo</td>
+      <td>1x/dia</td>
+      <td>Link bio / Stories</td>
+    </tr>
+    <tr>
+      <td>Instagram Stories</td>
+      <td>Urgência + Relacionamento</td>
+      <td>Autêntico, próximo</td>
+      <td>5–8 stories/dia</td>
+      <td>Link direto / WhatsApp</td>
+    </tr>
+    <tr>
+      <td>TikTok</td>
+      <td>Topo de funil + Alcance</td>
+      <td>Educativo, curioso</td>
+      <td>2x/dia</td>
+      <td>Bio link / Comments</td>
+    </tr>
+    <tr>
+      <td>YouTube Shorts</td>
+      <td>Topo de funil + Longevidade</td>
+      <td>Informativo</td>
+      <td>1x/dia</td>
+      <td>Descrição / Link</td>
+    </tr>
+    <tr>
+      <td>WhatsApp</td>
+      <td>Conversão direta</td>
+      <td>Consultivo, 1:1</td>
+      <td>Contínuo</td>
+      <td>Link Hotmart</td>
+    </tr>
+    <tr>
+      <td>Facebook</td>
+      <td>Anúncios + Grupos</td>
+      <td>Direto, chamativo</td>
+      <td>Anúncios</td>
+      <td>Landing Page</td>
+    </tr>
+    <tr>
+      <td>Tráfego Pago</td>
+      <td>Escala + Remarketing</td>
+      <td>Direto, urgente</td>
+      <td>Contínuo</td>
+      <td>Landing Page Hotmart</td>
+    </tr>
+  </table>
+</div>
+
+<!-- INSTAGRAM -->
+<div class="section" id="instagram">
+  <div class="section-tag">📸 Instagram</div>
+  <div class="section-title">Estratégia Completa Instagram</div>
+  <p class="section-sub">Feed, Stories, Reels e Lives · Técnica dos grandes criadores de conteúdo</p>
+
+  <div class="channel">
+    <div class="ch-head">
+      <div class="ch-icon ig">📱</div>
+      <div><div class="ch-name">REELS · Feed Principal</div><div class="ch-freq">1–2 por dia · Horários: 12h e 20h</div></div>
+    </div>
+    <p style="font-size:.83rem;color:var(--text-d);margin-bottom:1rem;">Cada Reel deve seguir a estrutura de Pablo Marçal: <strong style="color:var(--gold)">Gancho (2s) → Promessa (5s) → Conteúdo (30–50s) → CTA com urgência</strong>.</p>
+    <ul class="content-list">
+      <li><span class="day">Pré-Lançamento</span><span class="desc">🌌 "Você sabe qual é a sua linhagem estelar?" — Quiz interativo nos stories com resultado no Reel<span class="format">Reel 60s</span></span></li>
+      <li><span class="day">Pré-Lançamento</span><span class="desc">⚡ "Por que você sempre se sentiu diferente de todo mundo" — storytelling de identificação<span class="format">Reel 45s</span></span></li>
+      <li><span class="day">Pré-Lançamento</span><span class="desc">🐉 "Os 7 tipos de alma que habitam a Terra" — teaser das linhagens<span class="format">Carrossel</span></span></li>
+      <li><span class="day">Lançamento</span><span class="desc">🚀 "Abrimos as inscrições do Irmãos Estelares Part II" — Post oficial com toda a informação<span class="format">Reel/Carrossel</span></span></li>
+      <li><span class="day">Lançamento</span><span class="desc">👁 "5 sinais de que você é Arcturiano/Pleiadiano/Siriano" — série por linhagem<span class="format">Reels série</span></span></li>
+      <li><span class="day">Consolidação</span><span class="desc">💬 Depoimentos em vídeo dos alunos do Part I — prova social real<span class="format">Reel depo</span></span></li>
+      <li><span class="day">Consolidação</span><span class="desc">🌟 "As 7 novas linhagens reveladas no Part II" — conteúdo exclusivo<span class="format">Carrossel</span></span></li>
+      <li><span class="day">Fechamento</span><span class="desc">⏰ "Últimas horas para descobrir sua origem estelar" — urgência + CTA direto<span class="format">Reel 30s</span></span></li>
+    </ul>
+  </div>
+
+  <div class="channel">
+    <div class="ch-head">
+      <div class="ch-icon ig">⭕</div>
+      <div><div class="ch-name">STORIES · Motor de Conversão Diária</div><div class="ch-freq">5–8 stories por dia · Técnica da Jornada Diária</div></div>
+    </div>
+    <p style="font-size:.83rem;color:var(--text-d);margin-bottom:1rem;">Stories seguem a estrutura de Alfredo Soares: <strong style="color:var(--gold)">Curiosidade → Conteúdo → Oferta → Urgência</strong>. Nunca poste só oferta.</p>
+    <ul class="content-list">
+      <li><span class="day">Manhã 8h</span><span class="desc">Bom dia + pergunta de engajamento ("Você acredita em linhagens estelares?")<span class="format">Enquete</span></span></li>
+      <li><span class="day">10h</span><span class="desc">Fact curioso sobre uma linhagem específica<span class="format">Texto/Imagem</span></span></li>
+      <li><span class="day">12h</span><span class="desc">Bastidores da criação do curso / processo dos criadores<span class="format">Vídeo BTS</span></span></li>
+      <li><span class="day">15h</span><span class="desc">Repost de depoimento ou story de aluno<span class="format">Repost</span></span></li>
+      <li><span class="day">18h</span><span class="desc">CTA direto com link para Hotmart ou WhatsApp<span class="format">CTA</span></span></li>
+      <li><span class="day">20h</span><span class="desc">Contagem regressiva ou urgência (vagas, prazo)<span class="format">Urgência</span></span></li>
+      <li><span class="day">22h</span><span class="desc">Reflexão noturna + convite para a Live de amanhã<span class="format">Reflexão</span></span></li>
+    </ul>
+  </div>
+
+  <div class="notice gold">
+    <div class="ni">💡</div>
+    <div class="nc"><strong>Técnica Flávio Augusto — Storytelling com Autoridade:</strong> Sempre que for fazer um post de venda, comece com uma história pessoal. "Quando eu descobri que era Arcturiano, tudo mudou..." O público compra da pessoa antes de comprar o produto. Walter e Moana devem aparecer MUITO nos stories como pessoas, não apenas como professores.</div>
+  </div>
+
+  <div class="notice purple" style="margin-top:.75rem;">
+    <div class="ni">🔑</div>
+    <div class="nc"><strong>Gatilho de Identificação (Marcos Strider):</strong> Use o recurso de identidade. "Você se identifica com alguma dessas características?" → lista de traços da linhagem. Quem responde "sim" já criou uma conexão emocional com o produto antes mesmo de ver o preço.</div>
+  </div>
+</div>
+
+<!-- TIKTOK/YOUTUBE -->
+<div class="section" id="tiktok">
+  <div class="section-tag">🎵 TikTok & YouTube</div>
+  <div class="section-title">Estratégia de Alcance Orgânico</div>
+  <p class="section-sub">TikTok = topo de funil agressivo · YouTube = autoridade de longo prazo</p>
+
+  <div class="channel">
+    <div class="ch-head">
+      <div class="ch-icon tk">🎵</div>
+      <div><div class="ch-name">TikTok · Máquina de Alcance</div><div class="ch-freq">2 vídeos por dia · Gancho nos primeiros 2 segundos é tudo</div></div>
+    </div>
+    <p style="font-size:.83rem;color:var(--text-d);margin-bottom:1rem;">TikTok não vende diretamente — <strong style="color:var(--gold)">coleta leads</strong>. O objetivo é: assistiram → foram ao IG → entraram no WhatsApp → compraram.</p>
+    <ul class="content-list">
+      <li><span class="day">Gancho A</span><span class="desc">"Se você sempre se sentiu diferente de todo mundo, é porque você é..." (corte antes de revelar)<span class="format">POI Trend</span></span></li>
+      <li><span class="day">Gancho B</span><span class="desc">"Teste: responda 3 perguntas e eu te digo sua linhagem estelar" (gera comentários)<span class="format">Quiz UGC</span></span></li>
+      <li><span class="day">Gancho C</span><span class="desc">"Características de quem tem alma Pleiadiana — você tem alguma?" (identificação)<span class="format">Lista</span></span></li>
+      <li><span class="day">Gancho D</span><span class="desc">"Por que você sente coisas que os outros não sentem" (PAS/empatas)<span class="format">Storytelling</span></span></li>
+      <li><span class="day">Tendência</span><span class="desc">Usar áudio trending + mostrar as ilustrações das linhagens<span class="format">Trend Áudio</span></span></li>
+      <li><span class="day">Duet/Stitch</span><span class="desc">Reagir a vídeos sobre espiritualidade, missão de alma, PAS<span class="format">Reação</span></span></li>
+      <li><span class="day">TikTok Live</span><span class="desc">Lives 2–3x por semana de 30–45 min com revelação de linhagens ao vivo<span class="format">Live</span></span></li>
+    </ul>
+  </div>
+
+  <div class="channel">
+    <div class="ch-head">
+      <div class="ch-icon yt">▶️</div>
+      <div><div class="ch-name">YouTube Shorts + Canal</div><div class="ch-freq">1 Short/dia + 1 vídeo longo por semana (opcional)</div></div>
+    </div>
+    <ul class="content-list">
+      <li><span class="day">Shorts</span><span class="desc">Reutilizar os melhores TikToks — mesmos vídeos, distribuição duplicada<span class="format">Repurpose</span></span></li>
+      <li><span class="day">Vídeo Longo</span><span class="desc">"As 14 Linhagens Estelares Explicadas — Guia Completo 2025" (SEO longo prazo)<span class="format">SEO</span></span></li>
+      <li><span class="day">Vídeo Longo</span><span class="desc">"Como descobrir sua linhagem estelar em 7 perguntas" (lead magnet embutido)<span class="format">Funil</span></span></li>
+    </ul>
+  </div>
+
+  <div class="notice teal">
+    <div class="ni">🌊</div>
+    <div class="nc"><strong>Estratégia de Pablo Marçal no TikTok:</strong> Vídeos crus, sem edição excessiva. Câmera na mão. Falar direto, sem roteiro decorado. A autenticidade converte mais que a produção. Nos primeiros 2s: uma pergunta ou afirmação controversa. Exemplo: "Você é diferente porque sua alma não é daqui." — pausa — "Vou te provar."</div>
+  </div>
+</div>
+
+<!-- WHATSAPP -->
+<div class="section" id="whatsapp">
+  <div class="section-tag">💬 WhatsApp</div>
+  <div class="section-title">Atendimento de Alta Conversão</div>
+  <p class="section-sub">O WhatsApp é o canal de fechamento. Aqui acontece a venda consultiva.</p>
+
+  <div class="notice purple">
+    <div class="ni">⚠️</div>
+    <div class="nc"><strong>Regra de ouro:</strong> No WhatsApp você não vende, você <strong>resolve dúvidas e cria conexão</strong>. O link de compra vem depois que a pessoa sente que foi ouvida. Quem vai direto no link sem perguntar perde 70% das conversões.</div>
+  </div>
+
+  <div style="margin-top:1.5rem;">
+    <div class="script-box">
+      <div class="script-label">📩 Script 1 — Primeiro Contato (Lead Inbound)</div>
+      <div class="script-text"><strong>Quando alguém envia mensagem pela primeira vez:</strong>
+
+Olá! ✨ Que bom te ver aqui.
+
+Você veio pelo Instagram / TikTok? 
+
+Me conta: você já conhece o Irmãos Estelares, ou está chegando agora nas linhagens estelares?
+
+<em>(esperar resposta antes de enviar qualquer link)</em></div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-label">🌟 Script 2 — Pessoa que quer saber mais sobre o curso</div>
+      <div class="script-text"><strong>Quando perguntam "o que é o curso?":</strong>
+
+Que incrível você perguntar isso exatamente agora ✨
+
+O Irmãos Estelares Part II é um curso completo de Walter_alquimia e Moana Grandinetti que mapeia as 14 grandes linhagens de almas que habitam a Terra.
+
+Não é só teoria — é um processo de autoconhecimento profundo. Muita gente que fez o Part I me falou que "finalmente entendeu por que é tão diferente de todo mundo."
+
+Você se identifica com essa sensação de ser diferente?
+
+<em>(criar identificação antes de mostrar preço)</em></div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-label">💰 Script 3 — Apresentação do Preço</div>
+      <div class="script-text"><strong>Só enviar depois que a pessoa se identificou:</strong>
+
+O investimento é R$222,20 — número que não é por acaso. 222 é o número do alinhamento e equilíbrio. 😊
+
+Com isso você tem:
+✦ Acesso completo às 14 linhagens
+✦ Apostila digital detalhada
+✦ Ebook exclusivo Part II
+✦ Acesso vitalício (sem prazo para usar)
+
+Tudo na plataforma mais segura do Brasil, a Hotmart.
+
+Aqui está o link: [LINK HOTMART]
+
+Tem alguma dúvida antes de garantir o seu acesso?</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-label">🔥 Script 4 — Quebra de Objeção: "Está caro"</div>
+      <div class="script-text"><strong>Nunca diga "entendo" e desapareça. Use isso:</strong>
+
+Entendo! E quero te dar uma perspectiva...
+
+Terapias individuais de autoconhecimento custam de R$150 a R$300 por sessão. Uma sessão.
+
+Por R$222 você tem acesso vitalício a um conteúdo que já transformou a vida de centenas de pessoas que se sentiam exatamente como você — perdidas, diferentes, sem entender por que sentem tudo tão intensamente.
+
+Mas vou ser honesto/a: se você ainda não tem certeza, é porque talvez ainda não viu o suficiente. Me fala: o que te falta saber para tomar essa decisão?</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-label">⏰ Script 5 — Urgência Final (Fase de Fechamento)</div>
+      <div class="script-text"><strong>Usar nos últimos 3 dias antes do dia 10/06:</strong>
+
+Oi [nome]! Passando para te avisar que a nossa janela de inscrições fecha na terça-feira, dia 10 de junho.
+
+Depois disso o curso vai para lista de espera e não há previsão de reabertura com esse preço.
+
+Você ainda está considerando entrar? Posso te ajudar com alguma dúvida de última hora? ✨</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-label">✅ Script 6 — Pós-Compra (Encantamento)</div>
+      <div class="script-text"><strong>Enviar imediatamente após a confirmação de compra:</strong>
+
+PARABÉNS! Você acaba de dar um passo que muita gente não tem coragem de dar. 🌟
+
+Bem-vindo/a à jornada das Linhagens Estelares.
+
+Seu acesso já está ativo na Hotmart. Qualquer dúvida sobre o acesso, é só me chamar aqui.
+
+Uma última coisa: quando você descobrir sua linhagem, me conta! Fico honestamente curiosa/o para saber qual é a sua. ✨
+
+Seja bem-vindo/a, irmã/irmão estelar. 🐉⭐</div>
+    </div>
+  </div>
+
+  <div class="notice gold">
+    <div class="ni">📋</div>
+    <div class="nc"><strong>Organização do Atendimento WhatsApp:</strong> Use etiquetas no WhatsApp Business: 🔵 Novo Lead | 🟡 Interessado | 🟠 Objeção | 🟢 Comprou | 🔴 Descartado. Responda novos leads em até <strong>15 minutos</strong> — a taxa de conversão cai 80% após 1 hora sem resposta.</div>
+  </div>
+</div>
+
+<!-- TRÁFEGO PAGO -->
+<div class="section" id="trafego">
+  <div class="section-tag">📊 Tráfego Pago</div>
+  <div class="section-title">Meta Ads + Google (Estratégia Alfredo Soares)</div>
+  <p class="section-sub">Investimento estruturado · Funil completo · ROI mensurável</p>
+
+  <div class="grid-2" style="margin-bottom:1.5rem;">
+    <div class="card card-highlight">
+      <h3>🎯 Públicos Prioritários</h3>
+      <ul>
+        <li>Interesses: espiritualidade, autoconhecimento, astrologia</li>
+        <li>Comportamento: compradores online de cursos</li>
+        <li>Lookalike da lista de seguidores do IG</li>
+        <li>Remarketing: visitantes da landing page (últimos 30 dias)</li>
+        <li>Engajamento: curtiu/comentou posts do perfil</li>
+      </ul>
+    </div>
+    <div class="card card-highlight">
+      <h3>📱 Formatos de Anúncio</h3>
+      <ul>
+        <li><strong style="color:var(--gold)">Stories (9:16)</strong> — maior CTR para público quente</li>
+        <li><strong style="color:var(--gold)">Reel patrocinado</strong> — alcance de público frio</li>
+        <li><strong style="color:var(--gold)">Carrossel</strong> — mostrar as linhagens (conscientização)</li>
+        <li><strong style="color:var(--gold)">Vídeo 15s</strong> — remarketing urgência</li>
+        <li><strong style="color:var(--gold)">Imagem estática</strong> — testar hooks</li>
+      </ul>
+    </div>
+  </div>
+
+  <table>
+    <tr>
+      <th>Fase</th>
+      <th>Objetivo</th>
+      <th>Budget Diário Sugerido</th>
+      <th>Tipo de Anúncio</th>
+    </tr>
+    <tr>
+      <td>Pré-Lançamento (20–25/05)</td>
+      <td>Tráfego para LP / Seguidores</td>
+      <td>R$50–100/dia</td>
+      <td>Consciência + Engajamento</td>
+    </tr>
+    <tr>
+      <td>Abertura (26/05)</td>
+      <td>Conversão direta Hotmart</td>
+      <td>R$150–250/dia</td>
+      <td>Conversão + Remarketing</td>
+    </tr>
+    <tr>
+      <td>Manutenção (27/05–08/06)</td>
+      <td>Escalar o que converte</td>
+      <td>R$100–200/dia</td>
+      <td>Scale nos criativos vencedores</td>
+    </tr>
+    <tr>
+      <td>Fechamento (09–10/06)</td>
+      <td>Urgência / Última chance</td>
+      <td>R$200–350/dia</td>
+      <td>Remarketing + Urgência</td>
+    </tr>
+  </table>
+
+  <div class="notice teal" style="margin-top:1.25rem;">
+    <div class="ni">🔬</div>
+    <div class="nc"><strong>A/B Test obrigatório:</strong> Sempre rode no mínimo 3 criativos diferentes em cada campanha. Métricas para pausar: CTR abaixo de 1.5% em 72h ou CPL acima de R$30. Métricas para escalar: CTR acima de 3% e CPL abaixo de R$15. Nunca mexa num anúncio nos primeiros 3 dias — deixe o algoritmo aprender.</div>
+  </div>
+
+  <div style="margin-top:1.5rem;">
+    <h3 style="color:var(--white);font-size:.9rem;font-weight:700;margin-bottom:.75rem;">COPIES PARA ANÚNCIOS</h3>
+    <div class="grid-2">
+      <div class="script-box">
+        <div class="script-label">Copy A · Identificação</div>
+        <div class="script-text">Você sempre se sentiu diferente de todo mundo?
+
+Como se fosse de outro lugar.
+Como se as pessoas ao redor não entendessem você completamente.
+
+Pode ser porque você é.
+
+Irmãos Estelares Part II revela as 14 linhagens de almas que habitam a Terra — e qual é a sua.
+
+→ Acesse e descubra sua origem</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Copy B · Curiosidade</div>
+        <div class="script-text">Arcturiano. Pleiadiano. Dracônio. Lemuriano.
+
+Cada alma na Terra carrega uma assinatura energética única.
+
+No Irmãos Estelares Part II você vai:
+✦ Descobrir qual é a sua
+✦ Entender seus dons e desafios
+✦ Encontrar seu propósito
+
+R$222,20 · Acesso Vitalício
+
+→ Descobrir minha linhagem agora</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GATILHOS MENTAIS -->
+<div class="section" id="gatilhos">
+  <div class="section-tag">🧠 Psicologia de Vendas</div>
+  <div class="section-title">Gatilhos Mentais Aplicados ao Produto</div>
+  <p class="section-sub">Cada gatilho com exemplos práticos para Irmãos Estelares Part II</p>
+
+  <div class="gatilho">
+    <div class="g-num">01</div>
+    <div>
+      <div class="g-title">IDENTIDADE — "Quem você é, não o que você compra"</div>
+      <div class="g-desc">O mais poderoso para este produto. As pessoas não compram um curso — confirmam quem já são. Toda comunicação deve reforçar a identidade antes da oferta.</div>
+      <div class="g-example">"Você não está aqui por acaso. Almas estelares reconhecem umas às outras. Seja bem-vindo de volta, irmão/irmã."</div>
+    </div>
+  </div>
+
+  <div class="gatilho">
+    <div class="g-num">02</div>
+    <div>
+      <div class="g-title">ESCASSEZ — Tempo e vagas limitadas</div>
+      <div class="g-desc">Inscrições abertas apenas de 26/05 a 10/06. Use a data de fechamento em TODA comunicação. Não invente escassez falsa — a real já é poderosa.</div>
+      <div class="g-example">"Inscrições abertas até 10 de junho. Depois, lista de espera. Não se arrependa de ter esperado."</div>
+    </div>
+  </div>
+
+  <div class="gatilho">
+    <div class="g-num">03</div>
+    <div>
+      <div class="g-title">PROVA SOCIAL — Depoimentos são ouro</div>
+      <div class="g-desc">Recolher depoimentos em vídeo de alunos do Part I é urgente. A prova social deve aparecer todos os dias — em stories, no feed, no WhatsApp, nos anúncios.</div>
+      <div class="g-example">"Mais de [X] pessoas já descobriram sua linhagem estelar. Veja o que estão dizendo."</div>
+    </div>
+  </div>
+
+  <div class="gatilho">
+    <div class="g-num">04</div>
+    <div>
+      <div class="g-title">AUTORIDADE — Dois criadores = credibilidade dupla</div>
+      <div class="g-desc">Walter_alquimia e Moana Grandinetti devem ser apresentados como especialistas com trajetória. Mostre o processo de pesquisa, os anos de estudo, os casos reais.</div>
+      <div class="g-example">"Desenvolvido por Walter_alquimia e Moana Grandinetti — anos de pesquisa em leitura energética, psicologia profunda e espiritualidade aplicada."</div>
+    </div>
+  </div>
+
+  <div class="gatilho">
+    <div class="g-num">05</div>
+    <div>
+      <div class="g-title">ANTECIPAÇÃO — Revelar aos poucos aumenta o desejo</div>
+      <div class="g-desc">Não mostre tudo de uma vez. Revele uma linhagem nova por dia na semana antes do lançamento. Crie suspense sobre as 7 linhagens inéditas do Part II.</div>
+      <div class="g-example">"Amanhã revelamos a 8ª linhagem. Ela é a mais surpreendente de todas. Ative as notificações."</div>
+    </div>
+  </div>
+
+  <div class="gatilho">
+    <div class="g-num">06</div>
+    <div>
+      <div class="g-title">RECIPROCIDADE — Dê valor antes de pedir</div>
+      <div class="g-desc">Lives gratuitas, posts educativos aprofundados, quiz de linhagem grátis — antes de qualquer venda. Quem recebe conteúdo de qualidade sente a obrigação de retribuir.</div>
+      <div class="g-example">Live gratuita revelando 3 linhagens completas → ao final: "O curso completo com todas as 14 está disponível por R$222."</div>
+    </div>
+  </div>
+
+  <div class="gatilho">
+    <div class="g-num">07</div>
+    <div>
+      <div class="g-title">NÚMERO SIMBÓLICO — R$222,20 tem significado</div>
+      <div class="g-desc">No nicho espiritual, 222 é o número do alinhamento divino. Use isso ativamente: "O preço não é por acaso." Isso transforma o preço em parte da experiência.</div>
+      <div class="g-example">"R$222,20 — o número do equilíbrio e do alinhamento. Uma escolha que já começa como signo."</div>
+    </div>
+  </div>
+
+  <div class="gatilho">
+    <div class="g-num">08</div>
+    <div>
+      <div class="g-title">CURIOSIDADE — O "gap" de conhecimento gera ação</div>
+      <div class="g-desc">Abrir uma questão sem fechar imediatamente. "Você sabe qual é a sua linhagem?" (e não revelar). "Por que pessoas com alma Dracônica parecem tão intensas?" (e cortar).</div>
+      <div class="g-example">"Existe uma linhagem que costuma ter dificuldade em relacionamentos — e não é por falta de amor. Sabe qual é?" [resposta só no curso]</div>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYERS -->
+<div class="section" id="players">
+  <div class="section-tag">🏆 Técnicas dos Grandes Players</div>
+  <div class="section-title">O que Flávio, Alfredo, Strider e Marçal fariam</div>
+  <p class="section-sub">Adaptadas para o nicho de espiritualidade e linhagens estelares</p>
+
+  <div class="player">
+    <div class="player-head">
+      <div class="player-avatar" style="background:#F0C060;">FA</div>
+      <div>
+        <div class="player-name">Flávio Augusto — Geração de Valor</div>
+        <div class="player-tag">Autoridade · Storytelling · Mentalidade de Resultado</div>
+      </div>
+    </div>
+    <p style="font-size:.83rem;color:var(--text-d);margin-bottom:.75rem;">Flávio constrói autoridade antes de qualquer oferta. Ele conta histórias pessoais de transformação e usa o contraste "antes x depois" com precisão cirúrgica. O produto nunca é vendido pelo que é — mas pelo que <em>te transforma em</em>.</p>
+    <div class="player-techs">
+      <span class="tech" style="background:rgba(240,192,96,.1);color:var(--gold);">Storytelling Pessoal</span>
+      <span class="tech" style="background:rgba(240,192,96,.1);color:var(--gold);">Contraste Antes/Depois</span>
+      <span class="tech" style="background:rgba(240,192,96,.1);color:var(--gold);">Autoridade por Resultado</span>
+      <span class="tech" style="background:rgba(240,192,96,.1);color:var(--gold);">Mentoria de Mentalidade</span>
+    </div>
+    <div class="script-box" style="margin-top:1rem;">
+      <div class="script-label">Como aplicar no Irmãos Estelares</div>
+      <div class="script-text">Walter e Moana devem contar publicamente a história de COMO descobriram as linhagens estelares. O que mudou na vida deles. O que eles conseguiram entender de si mesmos que antes era nebuloso. Essa história é o maior ativo de venda. Sem ela, o produto parece genérico.</div>
+    </div>
+  </div>
+
+  <div class="player">
+    <div class="player-head">
+      <div class="player-avatar" style="background:#5B8DF5;color:#fff;">AS</div>
+      <div>
+        <div class="player-name">Alfredo Soares — Tráfego e Conversão</div>
+        <div class="player-tag">Data-Driven · Funil de Vendas · CRO · ROI</div>
+      </div>
+    </div>
+    <p style="font-size:.83rem;color:var(--text-d);margin-bottom:.75rem;">Alfredo trata lançamento como engenharia. Cada etapa tem métrica. Cada crença tem teste. Ele nunca aumenta budget de um anúncio que não provou funcionar. A landing page é otimizada semanalmente, não mensalmente.</p>
+    <div class="player-techs">
+      <span class="tech" style="background:rgba(91,141,245,.1);color:var(--accent);">A/B Test Contínuo</span>
+      <span class="tech" style="background:rgba(91,141,245,.1);color:var(--accent);">Pixel Configurado</span>
+      <span class="tech" style="background:rgba(91,141,245,.1);color:var(--accent);">Funil Mapeado</span>
+      <span class="tech" style="background:rgba(91,141,245,.1);color:var(--accent);">CPL Controlado</span>
+    </div>
+    <div class="script-box" style="margin-top:1rem;">
+      <div class="script-label">Como aplicar no Irmãos Estelares</div>
+      <div class="script-text">Instalar o Pixel do Facebook na landing page AGORA. Configurar eventos de conversão na Hotmart (compra confirmada). Usar UTMs em todos os links. Monitorar: Visitas LP → Cliques no CTA → Vendas. Com isso, sabe-se exatamente qual anúncio, post ou stories está convertendo. Sem isso, o dinheiro em tráfego é cheiro.</div>
+    </div>
+  </div>
+
+  <div class="player">
+    <div class="player-head">
+      <div class="player-avatar" style="background:#2DD4BF;color:#07060f;">MS</div>
+      <div>
+        <div class="player-name">Marcos Strider — Comunidade e Identidade</div>
+        <div class="player-tag">Pertencimento · Transformação de Identidade · Tribo</div>
+      </div>
+    </div>
+    <p style="font-size:.83rem;color:var(--text-d);margin-bottom:.75rem;">Strider vende pertencimento. O produto não é o que você compra — é a tribo que você entra. Quem compra não está comprando um curso: está se tornando parte de um grupo especial de pessoas que "já sabem quem são".</p>
+    <div class="player-techs">
+      <span class="tech" style="background:rgba(45,212,191,.1);color:var(--teal);">Comunidade Exclusiva</span>
+      <span class="tech" style="background:rgba(45,212,191,.1);color:var(--teal);">Identidade de Grupo</span>
+      <span class="tech" style="background:rgba(45,212,191,.1);color:var(--teal);">Transformação Progressiva</span>
+      <span class="tech" style="background:rgba(45,212,191,.1);color:var(--teal);">Missão Coletiva</span>
+    </div>
+    <div class="script-box" style="margin-top:1rem;">
+      <div class="script-label">Como aplicar no Irmãos Estelares</div>
+      <div class="script-text">Criar um grupo exclusivo no WhatsApp ou Telegram para alunos. Dar a esse grupo um nome especial: "Irmãos Estelares · Comunidade". Fazer encontros ao vivo (online) mensais só para alunos. Usar linguagem de tribo: "Bem-vindo à família estelar." O produto vira ponto de entrada — a comunidade vira o motivo de permanecer.</div>
+    </div>
+  </div>
+
+  <div class="player">
+    <div class="player-head">
+      <div class="player-avatar" style="background:#EC4899;color:#fff;">PM</div>
+      <div>
+        <div class="player-name">Pablo Marçal — Rawness e Provocação</div>
+        <div class="player-tag">Autenticidade Extrema · Lives Longas · Emoção Crua</div>
+      </div>
+    </div>
+    <p style="font-size:.83rem;color:var(--text-d);margin-bottom:.75rem;">Marçal não vende — ele <em>confronta</em>. Diz o que o cliente está pensando mas tem medo de admitir. Cria desconforto produtivo. Suas lives convertem porque são um espelho: "Você sabe que precisa disso. O que te impede?"</p>
+    <div class="player-techs">
+      <span class="tech" style="background:rgba(236,72,153,.1);color:var(--rose);">Confronto Emocional</span>
+      <span class="tech" style="background:rgba(236,72,153,.1);color:var(--rose);">Lives Longas</span>
+      <span class="tech" style="background:rgba(236,72,153,.1);color:var(--rose);">Autenticidade Sem Filtro</span>
+      <span class="tech" style="background:rgba(236,72,153,.1);color:var(--rose);">Urgência Emocional</span>
+    </div>
+    <div class="script-box" style="margin-top:1rem;">
+      <div class="script-label">Como aplicar no Irmãos Estelares</div>
+      <div class="script-text">Na Live de consolidação (10/06): perguntar ao vivo "O que está te impedindo de entrar?" e responder objeção por objeção publicamente. Falar de forma crua: "Você vai continuar vivendo sem entender por que é assim? Por que se sente só num mundo cheio de gente? Ou vai finalmente se reconhecer?" Sem exagero — mas com emoção real e verdadeira.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MÉTRICAS -->
+<div class="section" id="metricas">
+  <div class="section-tag">📈 Métricas e Metas</div>
+  <div class="section-title">O que Medir · O que Perseguir</div>
+  <p class="section-sub">Metas realistas baseadas em produto de R$222 · 21 dias de janela de vendas</p>
+
+  <div class="metric-row">
+    <div class="metric">
+      <div class="metric-val">50+</div>
+      <div class="metric-label">Meta de Vendas</div>
+      <div class="metric-target">= R$11.110 em receita</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">≤R$30</div>
+      <div class="metric-label">CPL Máximo</div>
+      <div class="metric-target">Custo por Lead aceitável</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">≥3%</div>
+      <div class="metric-label">CTR Mínimo</div>
+      <div class="metric-target">Taxa de clique nos anúncios</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">≥15min</div>
+      <div class="metric-label">Resp. WhatsApp</div>
+      <div class="metric-target">Tempo máximo de resposta</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">2x</div>
+      <div class="metric-label">Lives Semana</div>
+      <div class="metric-target">Mínimo para manter calor</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">80%</div>
+      <div class="metric-label">Taxa Stories</div>
+      <div class="metric-target">Stories com CTA embutido</div>
+    </div>
+  </div>
+
+  <table>
+    <tr>
+      <th>Métrica</th>
+      <th>Ferramenta</th>
+      <th>Frequência</th>
+      <th>Meta</th>
+    </tr>
+    <tr>
+      <td>Vendas diárias</td>
+      <td>Hotmart Dashboard</td>
+      <td>Toda manhã</td>
+      <td>2–5 vendas/dia</td>
+    </tr>
+    <tr>
+      <td>CPL (custo por lead)</td>
+      <td>Meta Ads Manager</td>
+      <td>A cada 48h</td>
+      <td>Abaixo de R$30</td>
+    </tr>
+    <tr>
+      <td>CTR dos anúncios</td>
+      <td>Meta Ads Manager</td>
+      <td>A cada 72h</td>
+      <td>Acima de 3%</td>
+    </tr>
+    <tr>
+      <td>Alcance orgânico TikTok</td>
+      <td>TikTok Analytics</td>
+      <td>Diário</td>
+      <td>+10k views/vídeo</td>
+    </tr>
+    <tr>
+      <td>Visitas landing page</td>
+      <td>Google Analytics / Hotmart</td>
+      <td>Diário</td>
+      <td>100+ visitas/dia</td>
+    </tr>
+    <tr>
+      <td>Conversão LP → Venda</td>
+      <td>Hotmart + Pixel</td>
+      <td>Semanal</td>
+      <td>2–5% de conversão</td>
+    </tr>
+    <tr>
+      <td>WhatsApp leads ativos</td>
+      <td>WhatsApp Business</td>
+      <td>Diário</td>
+      <td>Fechar 20–30% dos leads</td>
+    </tr>
+  </table>
+</div>
+
+<!-- CHECKLIST -->
+<div class="section" id="checklist">
+  <div class="section-tag">✅ Checklist Operacional</div>
+  <div class="section-title">O que Fazer Agora · Antes de Lançar</div>
+  <p class="section-sub">Ações críticas que precisam estar prontas antes do dia 26/05</p>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="color:var(--white);font-size:.85rem;font-weight:700;margin-bottom:.75rem;letter-spacing:.05em;text-transform:uppercase;">🔧 Infraestrutura Técnica</h3>
+      <ul class="checklist">
+        <li><div class="ck">○</div><div class="txt">Curso cadastrado e ativo na Hotmart com página de vendas</div></li>
+        <li><div class="ck">○</div><div class="txt">Pixel do Facebook instalado na landing page</div></li>
+        <li><div class="ck">○</div><div class="txt">Pixel configurado com evento de compra na Hotmart</div></li>
+        <li><div class="ck">○</div><div class="txt">UTMs configurados em todos os links de venda</div></li>
+        <li><div class="ck">○</div><div class="txt">WhatsApp Business configurado com respostas automáticas</div></li>
+        <li><div class="ck">○</div><div class="txt">Google Analytics instalado na landing page</div></li>
+        <li><div class="ck">○</div><div class="txt">Link da bio do IG atualizado (Linktree ou direto)</div></li>
+        <li><div class="ck">○</div><div class="txt">Apostila e Ebook prontos para entrega</div></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="color:var(--white);font-size:.85rem;font-weight:700;margin-bottom:.75rem;letter-spacing:.05em;text-transform:uppercase;">📦 Conteúdo Preparado</h3>
+      <ul class="checklist">
+        <li><div class="ck">○</div><div class="txt">Pack de 10+ Reels gravados e editados prontos</div></li>
+        <li><div class="ck">○</div><div class="txt">Roteiros das 3 Lives escritos e ensaiados</div></li>
+        <li><div class="ck">○</div><div class="txt">Depoimentos do Part I coletados em vídeo</div></li>
+        <li><div class="ck">○</div><div class="txt">Carrosséis das 14 linhagens criados</div></li>
+        <li><div class="ck">○</div><div class="txt">Stories de aquecimento prontos (1 semana)</div></li>
+        <li><div class="ck">○</div><div class="txt">Criativos dos anúncios criados (3 versões A/B/C)</div></li>
+        <li><div class="ck">○</div><div class="txt">Lista VIP WhatsApp criada e populada</div></li>
+        <li><div class="ck">○</div><div class="txt">Scripts de atendimento WhatsApp treinados</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="notice gold" style="margin-top:1.5rem;">
+    <div class="ni">🚨</div>
+    <div class="nc"><strong>Urgente — Antes de 22/05:</strong> Configurar o Pixel do Facebook e os eventos de conversão na Hotmart. Sem isso, nenhum dado de remarketing será coletado durante o aquecimento, e você vai desperdiçar o período mais valioso para construir o público de remarketing.</div>
+  </div>
+</div>
+
+<!-- LIVE SCRIPT -->
+<div class="section">
+  <div class="section-tag">🔴 Roteiro de Live</div>
+  <div class="section-title">Live de Consolidação · 10/06 — Estrutura de 2h</div>
+  <p class="section-sub">A live mais importante do lançamento · Baseada nas técnicas de Pablo Marçal + Flávio Augusto</p>
+
+  <table>
+    <tr>
+      <th>Horário</th>
+      <th>Bloco</th>
+      <th>Conteúdo</th>
+      <th>Objetivo</th>
+    </tr>
+    <tr>
+      <td>0–5 min</td>
+      <td>Abertura de Impacto</td>
+      <td>Entrar já falando — sem "olá a todos". Abrir com uma afirmação forte sobre linhagens estelares</td>
+      <td>Prender atenção imediata</td>
+    </tr>
+    <tr>
+      <td>5–15 min</td>
+      <td>Apresentação com Autoridade</td>
+      <td>Quem são Walter e Moana — jornada pessoal, não currículo. "Como eu descobri que tinha alma estelar"</td>
+      <td>Criar conexão e autoridade</td>
+    </tr>
+    <tr>
+      <td>15–50 min</td>
+      <td>Conteúdo de Alto Valor</td>
+      <td>Revelar 3 linhagens em profundidade (uma nova do Part II). Quiz ao vivo no chat. Perguntas e respostas.</td>
+      <td>Reciprocidade + Desejo</td>
+    </tr>
+    <tr>
+      <td>50–65 min</td>
+      <td>Depoimentos ao Vivo</td>
+      <td>Chamar 2–3 alunos do Part I ao vivo. Deixar falarem da transformação. Não roteirizar — autenticidade importa.</td>
+      <td>Prova social máxima</td>
+    </tr>
+    <tr>
+      <td>65–80 min</td>
+      <td>Quebra de Objeções</td>
+      <td>"Quem ainda não entrou, me diz no chat por quê." Responder uma a uma. "Não tenho dinheiro." "Não tenho tempo." "Não sei se é pra mim."</td>
+      <td>Eliminar barreiras de compra</td>
+    </tr>
+    <tr>
+      <td>80–100 min</td>
+      <td>Pitch de Vendas Emocional</td>
+      <td>Apresentar o curso completo. Mostrar a apostila e o ebook ao vivo. Reforçar o preço e o prazo. Urgência real: "Fecha hoje à meia-noite."</td>
+      <td>Conversão direta</td>
+    </tr>
+    <tr>
+      <td>100–120 min</td>
+      <td>CTA Final + Encerramento</td>
+      <td>Repetir o link várias vezes. Agradecer quem comprou. Mostrar vendas chegando. Fechar com uma mensagem de propósito.</td>
+      <td>Urgência final + fomo</td>
+    </tr>
+  </table>
+</div>
+
+<div class="footer">
+  <div style="font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold);letter-spacing:.1em;margin-bottom:.5rem;">HIPERCONSCIÊNCIA · IRMÃOS ESTELARES PART II</div>
+  <div>Estratégia de Lançamento · Walter_alquimia & Moana Grandinetti · Documento de uso interno</div>
+  <div style="margin-top:.5rem;color:rgba(255,255,255,.2);">20/05/2025 → 10/06/2025 · Lançamento Digital Hotmart</div>
+</div>
+
+<script>
+// Active nav highlight
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.nav a');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav a[href="#${e.target.id}"]`);
+      if(active) active.classList.add('active');
+    }
+  });
+}, {threshold:0.3});
+sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
