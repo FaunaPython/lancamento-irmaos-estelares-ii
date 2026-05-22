@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estratégia V2 · Irmãos Estelares Part II · 22/06</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#07060f;--surface:#0f0e1c;--card:#14132a;--border:rgba(168,85,247,0.18);
+  --purple:#8B3FD9;--purple-b:#A855F7;--gold:#D4A535;--gold-l:#F0C060;
+  --accent:#5B8DF5;--teal:#2DD4BF;--coral:#F97316;--rose:#EC4899;
+  --text:#c8d0e8;--text-d:#7a85a0;--white:#f0efff;
+  --green:#22c55e;--amber:#f59e0b;--red:#ef4444;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden;}
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.logo{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;}
+.logo span{color:var(--purple-b);}
+.v2-badge{font-size:.75rem;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:var(--green);padding:.3rem .8rem;border-radius:20px;letter-spacing:.08em;font-weight:700;}
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;gap:.5rem;overflow-x:auto;}
+.nav a{font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-d);padding:.4rem .9rem;border-radius:20px;text-decoration:none;white-space:nowrap;transition:all .2s;}
+.nav a:hover,.nav a.active{background:rgba(139,63,217,.2);color:var(--purple-b);}
+.hero{padding:4rem 2rem 3rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(34,197,94,.08) 0%,transparent 70%);pointer-events:none;}
+.hero-tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green);background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);padding:.35rem 1rem;border-radius:20px;display:inline-block;margin-bottom:1rem;}
+.hero h1{font-family:'Cinzel',serif;font-size:2.4rem;color:var(--white);line-height:1.2;margin-bottom:.5rem;}
+.hero h1 span{color:var(--purple-b);}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--text-d);font-style:italic;margin-bottom:2rem;}
+.kpi-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;text-align:center;min-width:140px;}
+.kpi-n{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--gold);font-weight:700;}
+.kpi-l{font-size:.72rem;color:var(--text-d);letter-spacing:.05em;text-transform:uppercase;margin-top:.2rem;}
+.section{padding:3rem 2rem;border-bottom:1px solid var(--border);max-width:960px;margin:0 auto;}
+.section-tag{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--purple-b);font-weight:600;margin-bottom:.5rem;}
+.section-title{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--white);margin-bottom:.5rem;}
+.section-sub{color:var(--text-d);font-size:.9rem;margin-bottom:2rem;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;}
+.card-icon{font-size:1.4rem;margin-bottom:.75rem;}
+.card h3{font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:.4rem;}
+.card p,.card ul{font-size:.82rem;color:var(--text-d);line-height:1.6;}
+.card ul{padding-left:1rem;}
+.card ul li{margin-bottom:.3rem;}
+.card-highlight{border-color:rgba(139,63,217,.35);background:rgba(139,63,217,.06);}
+.card-gold{border-color:rgba(212,165,53,.3);background:rgba(212,165,53,.04);}
+.card-green{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04);}
+.card-teal{border-color:rgba(45,212,191,.25);background:rgba(45,212,191,.04);}
+.timeline{position:relative;padding-left:2rem;}
+.timeline::before{content:'';position:absolute;left:.5rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--purple),var(--gold),var(--green));opacity:.3;}
+.t-item{position:relative;margin-bottom:1.5rem;}
+.t-dot{position:absolute;left:-1.75rem;top:.35rem;width:12px;height:12px;border-radius:50%;border:2px solid var(--purple-b);background:var(--void);}
+.t-dot.gold{border-color:var(--gold);}
+.t-dot.green{border-color:var(--green);background:rgba(34,197,94,.15);}
+.t-dot.live{border-color:var(--teal);}
+.t-date{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-d);margin-bottom:.2rem;}
+.t-title{font-weight:600;color:var(--white);font-size:.95rem;}
+.t-desc{font-size:.85rem;color:var(--text-d);margin-top:.3rem;}
+.t-pills{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem;}
+.pill{font-size:.68rem;font-weight:600;padding:.25rem .65rem;border-radius:10px;letter-spacing:.04em;}
+.pill-p{background:rgba(139,63,217,.15);color:var(--purple-b);border:1px solid rgba(139,63,217,.25);}
+.pill-g{background:rgba(212,165,53,.1);color:var(--gold);border:1px solid rgba(212,165,53,.2);}
+.pill-t{background:rgba(45,212,191,.1);color:var(--teal);border:1px solid rgba(45,212,191,.2);}
+.pill-c{background:rgba(249,115,22,.1);color:var(--coral);border:1px solid rgba(249,115,22,.2);}
+.pill-r{background:rgba(236,72,153,.1);color:var(--rose);border:1px solid rgba(236,72,153,.2);}
+.pill-b{background:rgba(91,141,245,.1);color:var(--accent);border:1px solid rgba(91,141,245,.2);}
+.pill-gr{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2);}
+.phase{border-radius:8px;padding:.5rem 1rem;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin-bottom:.75rem;}
+.phase.vip{background:rgba(212,165,53,.1);border:1px solid rgba(212,165,53,.25);color:var(--gold);}
+.phase.aquec{background:rgba(91,141,245,.1);border:1px solid rgba(91,141,245,.25);color:var(--accent);}
+.phase.launch{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:var(--green);}
+.phase.close{background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.25);color:var(--rose);}
+.notice{border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;display:flex;gap:.75rem;align-items:flex-start;}
+.notice.purple{background:rgba(139,63,217,.08);border:1px solid rgba(139,63,217,.25);}
+.notice.gold{background:rgba(212,165,53,.08);border:1px solid rgba(212,165,53,.25);}
+.notice.teal{background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.25);}
+.notice.green{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);}
+.notice .ni{font-size:1rem;flex-shrink:0;}
+.notice .nc{font-size:.83rem;color:var(--text);line-height:1.6;}
+.notice strong{color:var(--gold);}
+.script-box{background:rgba(0,0,0,.3);border:1px solid rgba(139,63,217,.2);border-radius:10px;padding:1.25rem;margin-bottom:1rem;}
+.script-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--purple-b);font-weight:600;margin-bottom:.6rem;}
+.script-text{font-size:.85rem;color:var(--text);line-height:1.7;white-space:pre-line;}
+.script-text strong{color:var(--gold);}
+table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.75rem;}
+th{background:rgba(139,63,217,.12);color:var(--purple-b);text-align:left;padding:.6rem .9rem;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;}
+td{padding:.6rem .9rem;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-d);}
+td:first-child{color:var(--white);font-weight:500;}
+tr:hover td{background:rgba(255,255,255,.02);}
+.divider{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+.bump-box{background:linear-gradient(135deg,rgba(212,165,53,.08),rgba(139,63,217,.08));border:1px solid rgba(212,165,53,.3);border-radius:16px;padding:1.5rem;margin-bottom:1rem;}
+.bump-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;}
+.bump-icon{font-size:1.6rem;}
+.bump-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);}
+.bump-sub{font-size:.78rem;color:var(--text-d);}
+.price-stack{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.price-card{flex:1;min-width:180px;background:var(--card);border-radius:12px;padding:1.25rem;text-align:center;border:1px solid var(--border);}
+.price-card.vip-card{border-color:rgba(212,165,53,.4);}
+.price-card.pub-card{border-color:rgba(139,63,217,.4);}
+.price-card.bump-card{border-color:rgba(45,212,191,.4);}
+.price-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;}
+.price-val{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;margin-bottom:.25rem;}
+.price-desc{font-size:.75rem;color:var(--text-d);}
+.checklist{list-style:none;}
+.checklist li{display:flex;gap:.6rem;align-items:flex-start;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.checklist li:last-child{border-bottom:none;}
+.ck{width:18px;height:18px;border-radius:4px;border:1px solid rgba(139,63,217,.35);flex-shrink:0;margin-top:.15rem;}
+.txt{font-size:.83rem;color:var(--text-d);}
+.footer{text-align:center;padding:2rem;font-size:.78rem;color:var(--text-d);border-top:1px solid var(--border);}
+@media(max-width:640px){.grid-2,.grid-3{grid-template-columns:1fr;}.hero h1{font-size:1.7rem;}.price-stack{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">Hiperconsciência · <span>Estratégia V2</span></div>
+  <div class="v2-badge">⚡ ATUALIZADO · LANÇAMENTO 22/06</div>
+</div>
+
+<nav class="nav">
+  <a href="#modelo" class="active">Modelo de Negócio</a>
+  <a href="#precos">Preços</a>
+  <a href="#timeline">Cronograma</a>
+  <a href="#vip">Grupo VIP</a>
+  <a href="#orderbump">Order Bump</a>
+  <a href="#canais">Canais</a>
+  <a href="#scripts">Scripts</a>
+  <a href="#checklist">Checklist</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">✦ Versão 2 · Estratégia Reformulada</div>
+  <h1>Irmãos Estelares <span>Part II</span></h1>
+  <p class="hero-sub">7 Novas Linhagens · Order Bump Part I · Lançamento 22/06/2025</p>
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-n">R$197</div><div class="kpi-l">Preço VIP Alumni</div></div>
+    <div class="kpi"><div class="kpi-n">R$247</div><div class="kpi-l">Preço Público</div></div>
+    <div class="kpi"><div class="kpi-n">R$97</div><div class="kpi-l">Order Bump Part I</div></div>
+    <div class="kpi"><div class="kpi-n">22/06</div><div class="kpi-l">Lançamento Oficial</div></div>
+    <div class="kpi"><div class="kpi-n">7</div><div class="kpi-l">Novas Linhagens</div></div>
+  </div>
+</div>
+
+<!-- MODELO DE NEGÓCIO -->
+<div class="section" id="modelo">
+  <div class="section-tag">◎ Novo Modelo</div>
+  <div class="section-title">A Separação Estratégica dos Produtos</div>
+  <p class="section-sub">Part I e Part II agora são produtos independentes com papéis distintos no funil</p>
+
+  <div class="grid-2">
+    <div class="card card-highlight">
+      <div class="card-icon">🌌</div>
+      <h3>Part I — As 7 Linhagens Originais</h3>
+      <p>Produto de entrada. Vendido como <strong style="color:var(--gold)">order bump</strong> no checkout do Part II para novos alunos. Complementa a jornada de quem chega pelo Part II sem ter feito o primeiro.</p>
+    </div>
+    <div class="card card-green">
+      <div class="card-icon">⭐</div>
+      <h3>Part II — As 7 Novas Linhagens</h3>
+      <p>Produto principal. 7 linhagens completamente inéditas — Greys, Blue Avians, Lemurianos, Intraterrenos, Venusianos, Insectóides e Alpha Centaurianos. Universo expandido e exclusivo.</p>
+    </div>
+  </div>
+
+  <div class="notice green" style="margin-top:1.25rem;">
+    <div class="ni">💡</div>
+    <div class="nc"><strong>Por que essa separação é poderosa:</strong> Quem já fez o Part I compra o Part II por R$197–R$247. Quem é novo compra o Part II por R$247 e ainda pode levar o Part I por mais R$97 no bump — gerando ticket médio de R$344. Dois públicos, duas jornadas, receita maximizada.</div>
+  </div>
+
+  <div class="notice gold" style="margin-top:.75rem;">
+    <div class="ni">🎯</div>
+    <div class="nc"><strong>Comunicação-chave:</strong> O Part II <em>não é continuação</em> — é expansão. Novas almas, novos arquétipos, novas missões. Quem fez o Part I vai querer completar o mapa. Quem nunca fez vai querer os dois.</div>
+  </div>
+</div>
+
+<!-- PREÇOS -->
+<div class="section" id="precos">
+  <div class="section-tag">💰 Precificação</div>
+  <div class="section-title">Estrutura de Preços Completa</div>
+  <p class="section-sub">Três camadas de preço que maximizam conversão em cada perfil de comprador</p>
+
+  <div class="price-stack">
+    <div class="price-card vip-card">
+      <div class="price-label" style="color:var(--gold);">⭐ Alumni VIP Part I</div>
+      <div class="price-val" style="color:var(--gold);">R$197</div>
+      <div class="price-desc">Exclusivo para alunos do Part I<br>Acesso antecipado · Até 21/06</div>
+    </div>
+    <div class="price-card pub-card">
+      <div class="price-label" style="color:var(--purple-b);">🌌 Preço Público</div>
+      <div class="price-val" style="color:var(--purple-b);">R$247</div>
+      <div class="price-desc">A partir de 22/06<br>Para todos os novos alunos</div>
+    </div>
+    <div class="price-card bump-card">
+      <div class="price-label" style="color:var(--teal);">➕ Order Bump Part I</div>
+      <div class="price-val" style="color:var(--teal);">R$97</div>
+      <div class="price-desc">No checkout do Part II<br>Ticket médio total: R$344</div>
+    </div>
+  </div>
+
+  <table>
+    <tr>
+      <th>Perfil do Comprador</th>
+      <th>Jornada</th>
+      <th>Ticket</th>
+      <th>Estratégia</th>
+    </tr>
+    <tr>
+      <td>Alumni Part I (VIP)</td>
+      <td>Só Part II</td>
+      <td style="color:var(--gold);">R$197</td>
+      <td>Grupo VIP WhatsApp · Acesso antecipado</td>
+    </tr>
+    <tr>
+      <td>Novo aluno (só Part II)</td>
+      <td>Só Part II</td>
+      <td style="color:var(--purple-b);">R$247</td>
+      <td>Lançamento público 22/06</td>
+    </tr>
+    <tr>
+      <td>Novo aluno (Part I + II)</td>
+      <td>Completo</td>
+      <td style="color:var(--teal);">R$344</td>
+      <td>Order bump no checkout do Part II</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ORDER BUMP -->
+<div class="section" id="orderbump">
+  <div class="section-tag">➕ Order Bump</div>
+  <div class="section-title">Part I no Checkout do Part II</div>
+  <p class="section-sub">A estratégia que aumenta o ticket médio sem esforço adicional de venda</p>
+
+  <div class="bump-box">
+    <div class="bump-head">
+      <div class="bump-icon">🛒</div>
+      <div>
+        <div class="bump-title">Como funciona o Order Bump</div>
+        <div class="bump-sub">Uma oferta irresistível aparece no momento de maior intenção de compra</div>
+      </div>
+    </div>
+    <p style="font-size:.85rem;color:var(--text-d);margin-bottom:1rem;">O aluno vai comprar o Part II por R$247. No checkout, antes de confirmar o pagamento, aparece a oferta do Part I por R$97. Um clique adiciona ao pedido sem nova transação.</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="script-label">Texto do Order Bump na página</div>
+        <div class="script-box">
+          <div class="script-text"><strong>➕ SIM! Quero completar minha jornada estelar</strong>
+
+Adicione o Irmãos Estelares Part I por apenas R$97
+
+As 7 linhagens originais — Plêiadianos, Arcturianos, Siriano, Andrômeda, Draconianos, Orionidas e Lyrianos — agora acessíveis com um único clique.
+
+Comece pela raiz. Entenda tudo.
+
+✦ Acesso vitalício incluído
+✦ Apostila digital do Part I
+✦ Sem nova transação — um clique só</div>
+        </div>
+      </div>
+      <div>
+        <div class="script-label">Por que R$97 converte</div>
+        <div class="card" style="height:auto;">
+          <ul>
+            <li>Parece barato ao lado de R$247 que já foi decidido</li>
+            <li>Completa a jornada — gatilho de completude</li>
+            <li>"Só mais R$97" vs "Comprar separado depois por mais"</li>
+            <li>Urgência implícita: só disponível nesse momento</li>
+            <li>Estimativa: 25–40% dos compradores aceitam o bump</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notice purple">
+    <div class="ni">⚙️</div>
+    <div class="nc"><strong>Configuração na Hotmart:</strong> Vá em Precificação e ofertas → Configurar checkout → Order Bump. Selecione o produto Irmãos Estelares Part I e defina o valor de R$97. O texto do bump você personaliza diretamente no editor do checkout.</div>
+  </div>
+</div>
+
+<!-- CRONOGRAMA -->
+<div class="section" id="timeline">
+  <div class="section-tag">📅 Cronograma Atualizado</div>
+  <div class="section-title">22 de Maio → 22 de Junho</div>
+  <p class="section-sub">31 dias de estratégia · 3 fases · Lançamento oficial 22/06/2025</p>
+
+  <!-- FASE VIP -->
+  <div class="phase vip">FASE 1 · Ativação VIP Alumni (22/05 → 31/05)</div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-dot gold"></div>
+      <div class="t-date">22/05 · QUI — HOJE</div>
+      <div class="t-title">Mensagem 1 no Grupo Part I — Reconhecimento</div>
+      <div class="t-desc">Primeira mensagem no grupo: sentimento de pertencimento, anunciar que eles saberão primeiro. Sem revelar o produto ainda. Criar antecipação e mistério.</div>
+      <div class="t-pills"><span class="pill pill-t">WhatsApp Grupo VIP</span><span class="pill pill-g">Reconhecimento</span></div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot gold"></div>
+      <div class="t-date">23/05 · SEX</div>
+      <div class="t-title">Mensagem 2 — Revelar o Part II + Oferta R$197</div>
+      <div class="t-desc">Anunciar oficialmente o Part II, as 7 novas linhagens, e a oferta exclusiva de R$197 somente para o grupo. Prazo: até 21/06. Link da oferta VIP da Hotmart.</div>
+      <div class="t-pills"><span class="pill pill-g">Oferta VIP</span><span class="pill pill-t">Link R$197</span></div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot gold"></div>
+      <div class="t-date">26–28/05 · SEG-QUA</div>
+      <div class="t-title">Nutrição VIP — Revelar as 7 Linhagens uma a uma</div>
+      <div class="t-desc">Uma linhagem nova revelada por dia no grupo. Gerar desejo e curiosidade. Responder dúvidas individualmente. Publicar primeiros depoimentos do Part I como prova social.</div>
+      <div class="t-pills"><span class="pill pill-p">Conteúdo Diário</span><span class="pill pill-g">Prova Social</span><span class="pill pill-t">Atendimento 1:1</span></div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot gold"></div>
+      <div class="t-date">29–31/05 · QUI-SÁB</div>
+      <div class="t-title">Live Exclusiva VIP + Urgência Crescente</div>
+      <div class="t-desc">Live fechada só para o grupo VIP — Walter e Moana revelam mais 2 linhagens ao vivo. CTA para garantir o R$197. Mensagem de urgência: "quanto menos tempo, mais o preço sobe".</div>
+      <div class="t-pills"><span class="pill pill-t">Live Privada</span><span class="pill pill-g">Urgência</span><span class="pill pill-p">CTA R$197</span></div>
+    </div>
+  </div>
+
+  <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0;">
+
+  <!-- FASE PRÉ-LANÇAMENTO -->
+  <div class="phase aquec">FASE 2 · Aquecimento Público (01/06 → 14/06)</div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-date">01–03/06 · DOM-TER</div>
+      <div class="t-title">Abertura do Aquecimento Público</div>
+      <div class="t-desc">Primeiros posts no Instagram e TikTok anunciando "algo novo vem aí". Teaser das novas linhagens. Ativar pixel e começar a construir audiência para remarketing. Criar lista de espera pública.</div>
+      <div class="t-pills"><span class="pill pill-p">Instagram</span><span class="pill pill-c">TikTok</span><span class="pill pill-b">Pixel ON</span></div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-date">04–07/06 · QUA-SÁB</div>
+      <div class="t-title">Revelação das 7 Novas Linhagens — Série de Conteúdo</div>
+      <div class="t-desc">Uma linhagem nova por dia nos stories e reels. Cada post termina com "Descubra a sua no Part II — inscrições abrem 22/06." Conteúdo educativo gera alcance orgânico no TikTok.</div>
+      <div class="t-pills"><span class="pill pill-p">Série Reels</span><span class="pill pill-c">TikTok Série</span><span class="pill pill-b">YouTube Shorts</span></div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-date">08–10/06 · DOM-TER</div>
+      <div class="t-title">Live de Aquecimento Público #1</div>
+      <div class="t-desc">Live aberta revelando 2–3 linhagens gratuitamente. Apresentar o conceito do Part II. Convidar para lista de espera no WhatsApp. Iniciar tráfego pago de consciência (R$50–80/dia).</div>
+      <div class="t-pills"><span class="pill pill-p">Live IG</span><span class="pill pill-c">TikTok Live</span><span class="pill pill-b">Tráfego ON</span></div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-date">11–14/06 · QUA-SÁB</div>
+      <div class="t-title">Depoimentos + Prova Social Intensiva</div>
+      <div class="t-desc">Publicar depoimentos em vídeo de alunos do Part I. Mostrar transformações reais. Quiz de linhagem nos stories. Tráfego pago escalando para R$120–150/dia.</div>
+      <div class="t-pills"><span class="pill pill-g">Depoimentos</span><span class="pill pill-p">Quiz Stories</span><span class="pill pill-r">Meta Ads Scale</span></div>
+    </div>
+  </div>
+
+  <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0;">
+
+  <!-- FASE LANÇAMENTO -->
+  <div class="phase launch">FASE 3 · Lançamento e Vendas (15/06 → 22/06)</div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-dot live"></div>
+      <div class="t-date">15–17/06 · DOM-TER</div>
+      <div class="t-title">Semana de Lançamento — Urgência e Desejo</div>
+      <div class="t-desc">Comunicação: "Faltam 7 dias". Reels diários com gatilhos de escassez e identidade. Tráfego pago máximo. WhatsApp: ativar lista de espera pública com aviso de lançamento.</div>
+      <div class="t-pills"><span class="pill pill-g">Contagem Regressiva</span><span class="pill pill-b">Tráfego Max</span><span class="pill pill-t">WhatsApp Lista</span></div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot live"></div>
+      <div class="t-date">18–20/06 · QUA-SEX</div>
+      <div class="t-title">Live de Pré-Venda #2 + Quebra de Objeções</div>
+      <div class="t-desc">Live de 90 min com conteúdo + pitching. Responder objeções ao vivo. Mostrar o material (apostila, ebook). "Inscrições abrem domingo." Remarketing agressivo para visitantes da LP.</div>
+      <div class="t-pills"><span class="pill pill-p">Live Venda</span><span class="pill pill-r">Remarketing</span><span class="pill pill-t">Suporte WhatsApp</span></div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot green"></div>
+      <div class="t-date">21/06 · SÁB</div>
+      <div class="t-title">Último Aviso VIP — Preço R$197 Encerra Amanhã</div>
+      <div class="t-desc">Mensagem final no grupo VIP: "Amanhã abre para o público por R$247. Quem ainda não garantiu o R$197 tem até meia-noite." Criar urgência real e definitiva.</div>
+      <div class="t-pills"><span class="pill pill-g">Urgência VIP Final</span><span class="pill pill-t">Mensagem Grupo</span></div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot green"></div>
+      <div class="t-date">22/06 · DOM — DIA D 🚀</div>
+      <div class="t-title">LANÇAMENTO OFICIAL · Inscrições Abertas R$247</div>
+      <div class="t-desc">Post de lançamento às 12h. Broadcast WhatsApp lista de espera. Tráfego pago em máxima potência. Atendimento WhatsApp em tempo real. Live de lançamento à noite (20h). Meta: 30+ vendas no dia.</div>
+      <div class="t-pills"><span class="pill pill-gr">POST LANÇAMENTO</span><span class="pill pill-t">Broadcast WhatsApp</span><span class="pill pill-b">Tráfego Máximo</span><span class="pill pill-p">Live 20h</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- GRUPO VIP -->
+<div class="section" id="vip">
+  <div class="section-tag">⭐ Grupo VIP</div>
+  <div class="section-title">Estratégia Completa para Alumni Part I</div>
+  <p class="section-sub">Sequência de 3 mensagens · Do reconhecimento ao fechamento</p>
+
+  <div class="script-box">
+    <div class="script-label">📩 Mensagem 1 · Hoje 22/05 · Reconhecimento</div>
+    <div class="script-text">✨ Oi, família estelar.
+
+Eu queria falar com vocês antes de qualquer outra pessoa.
+
+Vocês que estiveram no Irmãos Estelares Part I fizeram parte de algo que a gente nunca esquece. Cada um de vocês carregou essa jornada de um jeito muito único — e isso ficou com a gente.
+
+Por isso, antes de abrir qualquer anúncio, antes de qualquer post público, antes do mundo saber...
+
+Vocês vão ser os primeiros a saber o que vem aí. 🌌
+
+Fica de olho nesse grupo. Amanhã a gente conta tudo.
+
+⭐ Walter & Moana</div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-label">🌟 Mensagem 2 · 23/05 às 10h · A Oferta VIP</div>
+    <div class="script-text">🪐 Chegou a hora de contar.
+
+O universo dos Irmãos Estelares está expandindo.
+
+O Part II chegou — e com ele, 7 linhagens que nunca foram reveladas antes:
+🔵 Greys · Blue Avians · Lemurianos
+🟢 Intraterrenos · Venusianos
+⚫ Insectóides · Alpha Centaurianos
+
+Cada uma com sua missão, seus dons, seus desafios únicos.
+
+As inscrições abrem para o público no dia 22/06, por R$247,00.
+
+Mas vocês não são o público.
+
+Vocês são a família que fez o Part I acontecer. Por isso a gente preparou algo só pra cá:
+
+✨ ACESSO VIP · R$197,00 ✨
+Somente para alunos do Part I
+Disponível até 21/06 — um dia antes do lançamento público
+
+Para garantir o seu, é só clicar aqui:
+→ [LINK OFERTA R$197]
+
+Não vai ter esse preço em nenhum outro lugar. 💜
+
+⭐ Walter & Moana</div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-label">⏰ Mensagem 3 · 21/06 às 19h · Fechamento VIP</div>
+    <div class="script-text">⏰ Último aviso, família.
+
+Amanhã abre para o público — e o preço vai para R$247.
+
+O acesso VIP de R$197 exclusivo para vocês encerra hoje à meia-noite.
+
+Quem ainda não garantiu: é agora ou nunca mais nesse valor.
+→ [LINK OFERTA R$197]
+
+E pra quem já garantiu — bem-vindo/a de volta, irmão/irmã. A jornada continua. 🪐⭐
+
+✨ Walter & Moana</div>
+  </div>
+
+  <div class="notice gold">
+    <div class="ni">📋</div>
+    <div class="nc"><strong>Resposta padrão para quem pedir o link no grupo:</strong> "Que alegria te ver no Part II também! 🌌 Aqui está o seu link exclusivo de alumni: [LINK R$197]. Qualquer dúvida me chama. Bem-vindo/a de volta, irmão/irmã. ⭐" — Enviar sempre de forma personalizada, nunca em grupo.</div>
+  </div>
+</div>
+
+<!-- CANAIS -->
+<div class="section" id="canais">
+  <div class="section-tag">📡 Canais</div>
+  <div class="section-title">Estratégia por Canal · Versão Atualizada</div>
+  <p class="section-sub">Foco nas 7 novas linhagens como motor de conteúdo · Lançamento 22/06</p>
+
+  <table>
+    <tr>
+      <th>Canal</th>
+      <th>Papel no Funil</th>
+      <th>Frequência</th>
+      <th>Conteúdo Principal</th>
+    </tr>
+    <tr>
+      <td>Instagram Reels</td>
+      <td>Desejo + Autoridade</td>
+      <td>1–2/dia</td>
+      <td>Série das 7 novas linhagens · Identificação · Depoimentos</td>
+    </tr>
+    <tr>
+      <td>Instagram Stories</td>
+      <td>Urgência + Relacionamento</td>
+      <td>5–8/dia</td>
+      <td>Quiz linhagem · Contagem regressiva · CTA WhatsApp</td>
+    </tr>
+    <tr>
+      <td>TikTok</td>
+      <td>Alcance · Topo de Funil</td>
+      <td>2/dia</td>
+      <td>Hooks das linhagens novas · Quiz comentários · Lives</td>
+    </tr>
+    <tr>
+      <td>YouTube Shorts</td>
+      <td>Longevidade · SEO</td>
+      <td>1/dia</td>
+      <td>Repurpose dos TikToks + 1 vídeo longo sobre as 7 linhagens</td>
+    </tr>
+    <tr>
+      <td>WhatsApp VIP</td>
+      <td>Conversão Antecipada</td>
+      <td>3 mensagens chave</td>
+      <td>Sequência VIP 22/05 → 21/06 · Atendimento 1:1</td>
+    </tr>
+    <tr>
+      <td>WhatsApp Lista Espera</td>
+      <td>Conversão Lançamento</td>
+      <td>Broadcast 22/06</td>
+      <td>Aviso de abertura · Link de compra · Suporte</td>
+    </tr>
+    <tr>
+      <td>Meta Ads</td>
+      <td>Escala + Remarketing</td>
+      <td>Contínuo</td>
+      <td>Tráfego frio → LP · Remarketing visitantes · Lookalike alumni</td>
+    </tr>
+  </table>
+
+  <div class="notice purple" style="margin-top:1.25rem;">
+    <div class="ni">🎬</div>
+    <div class="nc"><strong>Série de conteúdo de maior impacto:</strong> "As 7 linhagens que nunca foram reveladas" — um reel/tiktok por linhagem, publicado um por dia na semana de 04 a 10/06. Cada vídeo termina: "Esta é a [N]ª das 7 novas linhagens. Qual a sua? Descubra no Part II — inscrições abrem 22/06."</div>
+  </div>
+</div>
+
+<!-- SCRIPTS WHATSAPP ATENDIMENTO -->
+<div class="section" id="scripts">
+  <div class="section-tag">💬 Scripts</div>
+  <div class="section-title">Atendimento WhatsApp de Alta Conversão</div>
+  <p class="section-sub">Para leads públicos · Pós-lançamento 22/06</p>
+
+  <div class="script-box">
+    <div class="script-label">Script 1 · Primeiro Contato</div>
+    <div class="script-text">✨ Oi! Que bom ter você aqui.
+
+Você chegou pelo Instagram ou TikTok?
+
+Me conta — você já conhece o universo dos Irmãos Estelares, ou está chegando agora nas linhagens estelares?</div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-label">Script 2 · Para quem não conhece o Part I</div>
+    <div class="script-text">Que incrível você chegar exatamente agora ✨
+
+O Irmãos Estelares é um processo de autoconhecimento que mapeia as linhagens de almas que habitam a Terra. Cada alma carrega uma assinatura cósmica única — com dons, desafios e missão de vida específicos.
+
+O Part II revela 7 linhagens completamente novas — nunca ensinadas antes.
+
+E tem um detalhe: no checkout, você pode completar a jornada levando as 7 linhagens originais do Part I por R$97 a mais. Muita gente prefere começar com o mapa completo.
+
+Você se identifica com a sensação de ser diferente do mundo ao redor?</div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-label">Script 3 · Apresentar o Preço e o Order Bump</div>
+    <div class="script-text">O Part II está por R$247,00 com acesso vitalício, apostila digital e ebook exclusivo — tudo na Hotmart.
+
+E no checkout você vai ver uma oferta especial: o Part I (as 7 linhagens originais) por R$97. Se você quiser o mapa completo das 14 linhagens, é a melhor forma.
+
+Aqui está o link: [LINK HOTMART R$247]
+
+Tem alguma dúvida antes de garantir o seu acesso?</div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-label">Script 4 · Objeção "Está caro"</div>
+    <div class="script-text">Entendo a consideração — e quero te dar uma perspectiva honesta.
+
+Uma sessão de terapia ou consultoria de autoconhecimento custa entre R$150 e R$350. Uma sessão.
+
+Por R$247 você tem acesso vitalício a um conteúdo que vai te dar clareza sobre quem você é, de onde veio e qual é a sua missão aqui.
+
+Mas vou ser direta: se você ainda tem dúvida, me diz — o que falta você saber para tomar essa decisão?</div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-label">Script 5 · Pós-Compra · Encantamento</div>
+    <div class="script-text">PARABÉNS! 🌌 Você acaba de dar um passo que muita gente não tem coragem de dar.
+
+Seu acesso já está ativo na Hotmart. Qualquer dúvida sobre o acesso, me chama aqui.
+
+Uma coisa: quando você descobrir sua linhagem, me conta! Fico honestamente curiosa/o para saber qual é a sua. ✨
+
+Seja bem-vindo/a, irmã/irmão estelar. 🪐⭐</div>
+  </div>
+</div>
+
+<!-- CHECKLIST -->
+<div class="section" id="checklist">
+  <div class="section-tag">✅ Checklist</div>
+  <div class="section-title">Ações Prioritárias Agora</div>
+  <p class="section-sub">O que precisa estar pronto antes de cada fase</p>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="color:var(--gold);font-size:.85rem;font-weight:700;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.05em;">⚡ Urgente · Hoje</h3>
+      <ul class="checklist">
+        <li><div class="ck"></div><div class="txt">Ativar oferta VIP R$197 na Hotmart (status Disponível)</div></li>
+        <li><div class="ck"></div><div class="txt">Configurar order bump do Part I por R$97 no checkout</div></li>
+        <li><div class="ck"></div><div class="txt">Enviar Mensagem 1 no grupo VIP Part I</div></li>
+        <li><div class="ck"></div><div class="txt">Instalar Pixel do Facebook na landing page</div></li>
+        <li><div class="ck"></div><div class="txt">Criar lista de espera pública no WhatsApp</div></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="color:var(--purple-b);font-size:.85rem;font-weight:700;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.05em;">📦 Antes de 01/06</h3>
+      <ul class="checklist">
+        <li><div class="ck"></div><div class="txt">Pack de 7 reels das novas linhagens gravados e editados</div></li>
+        <li><div class="ck"></div><div class="txt">Roteiros das 2 lives escritos e ensaiados</div></li>
+        <li><div class="ck"></div><div class="txt">Depoimentos do Part I coletados em vídeo</div></li>
+        <li><div class="ck"></div><div class="txt">Criativos dos anúncios prontos (3 versões A/B/C)</div></li>
+        <li><div class="ck"></div><div class="txt">Atualizar landing page com data 22/06 e preço R$247</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="notice green" style="margin-top:1.5rem;">
+    <div class="ni">🚀</div>
+    <div class="nc"><strong>Prioridade máxima hoje:</strong> Ativar a oferta VIP de R$197 na Hotmart e enviar a Mensagem 1 no grupo. O grupo VIP é o ativo mais valioso — são pessoas que já compraram, já confiam, e já viveram a transformação. A primeira venda do Part II vai sair dali.</div>
+  </div>
+</div>
+
+<div class="footer">
+  <div style="font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold);letter-spacing:.1em;margin-bottom:.5rem;">HIPERCONSCIÊNCIA · IRMÃOS ESTELARES PART II</div>
+  <div>Estratégia V2 · Walter_alquimia & Moana Grandinetti · Lançamento 22/06/2025</div>
+  <div style="margin-top:.35rem;"><a href="./index.html" style="color:var(--purple-b);font-size:.78rem;text-decoration:none;">← Ver Estratégia V1 (original)</a></div>
+  <div style="margin-top:.5rem;color:rgba(255,255,255,.2);">22/05/2025 → 22/06/2025 · Documento de uso interno</div>
+</div>
+
+<script>
+const sections=document.querySelectorAll('.section[id]');
+const navLinks=document.querySelectorAll('.nav a');
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.nav a[href="#${e.target.id}"]`);if(a)a.classList.add('active');}});},{threshold:0.3});
+sections.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
